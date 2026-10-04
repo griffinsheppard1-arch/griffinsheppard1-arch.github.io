@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Sunday Coach · Sep 27–Oct 3, 2026 · Griffin Sheppard</title>
+<style>
+:root{
+  --bg:#0b0d10; --card:#151920; --card2:#1b212a; --line:#2a3340;
+  --text:#f2f4f7; --muted:#9aa3b2; --dim:#6b7380;
+  --g:#1f9d57; --gbg:rgba(31,157,87,.16);
+  --y:#d4a017; --ybg:rgba(212,160,23,.16);
+  --r:#e04545; --rbg:rgba(224,69,69,.16);
+  --blue:#3b82f6; --blue2:#60a5fa;
+  --radius:14px; --pad:16px;
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+  background:var(--bg); color:var(--text); font-size:15px; line-height:1.4;
+  padding-bottom:calc(72px + var(--safe-b));
+}
+.banner{
+  background:linear-gradient(90deg,#0f766e,#1f9d57); color:#fff;
+  font-size:11px; font-weight:600; letter-spacing:.02em;
+  text-align:center; padding:8px 12px; line-height:1.45;
+}
+.banner .stamp{display:block; opacity:.92; font-weight:500; margin-top:2px}
+header.app{
+  position:sticky; top:0; z-index:20; backdrop-filter:blur(16px);
+  background:rgba(11,13,16,.88); border-bottom:1px solid var(--line);
+  padding:12px var(--pad) 0;
+}
+.week{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px}
+.week h1{margin:0; font-size:22px; font-weight:700; letter-spacing:-.02em}
+.week .meta{font-size:12px; color:var(--muted); margin-top:2px}
+.chip{
+  font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px;
+  background:var(--card2); border:1px solid var(--line); color:var(--blue2); white-space:nowrap;
+  text-align:center; line-height:1.3;
+}
+.nav{
+  display:flex; gap:4px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding-bottom:10px; scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  flex:0 0 auto; text-decoration:none; color:var(--muted); font-size:13px; font-weight:600;
+  padding:8px 12px; border-radius:999px; cursor:pointer;
+}
+.nav a.active,.nav a:hover{background:var(--card2); color:var(--text)}
+main{padding:var(--pad); max-width:480px; margin:0 auto}
+.page{display:none}
+.page.active{display:block}
+.heroes{
+  display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;
+}
+.hero{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:12px 14px; min-height:78px;
+}
+.hero .k{font-size:11px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.04em}
+.hero .v{font-size:26px; font-weight:700; letter-spacing:-.03em; margin-top:4px; font-variant-numeric:tabular-nums}
+.hero .u{font-size:13px; font-weight:600; color:var(--muted); margin-left:2px}
+.trend{
+  display:inline-flex; align-items:center; gap:3px; margin-top:6px;
+  font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px;
+}
+.trend.up{background:var(--gbg); color:var(--g)}
+.trend.down{background:var(--rbg); color:var(--r)}
+.trend.flat{background:rgba(154,163,178,.15); color:var(--muted)}
+.trend.warn{background:var(--ybg); color:var(--y)}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:14px; margin-bottom:12px;
+}
+.card h2{margin:0 0 10px; font-size:15px; font-weight:700}
+.card h3{margin:0 0 8px; font-size:13px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.04em}
+.rx{border-left:3px solid var(--blue); background:var(--card2)}
+.rx ul{margin:0; padding-left:18px}
+.rx li{margin-bottom:6px}
+.rx li:last-child{margin-bottom:0}
+table{width:100%; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums}
+th{text-align:left; font-size:10px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:6px 4px; border-bottom:1px solid var(--line)}
+td{padding:8px 4px; border-bottom:1px solid rgba(42,51,64,.6); vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.num{font-weight:700}
+.g{color:var(--g)}.y{color:var(--y)}.r{color:var(--r)}.muted{color:var(--muted)}
+.pill{
+  display:inline-block; font-size:10px; font-weight:800; padding:2px 7px; border-radius:6px;
+  letter-spacing:.03em;
+}
+.pill.g{background:var(--gbg); color:var(--g)}
+.pill.y{background:var(--ybg); color:var(--y)}
+.pill.r{background:var(--rbg); color:var(--r)}
+.pill.skip{background:rgba(154,163,178,.12); color:var(--muted); border:1px dashed var(--line)}
+.scoreboard{display:flex; flex-direction:column; gap:8px}
+.row{
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+  padding:12px; background:var(--card2); border-radius:12px; border:1px solid var(--line);
+}
+.row .name{font-weight:600; font-size:14px}
+.row .sub{font-size:11px; color:var(--muted); margin-top:2px}
+.daybox{margin-bottom:10px}
+.daybox summary{
+  list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+  padding:12px 14px; background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  font-weight:700; font-size:14px;
+}
+.daybox summary::-webkit-details-marker{display:none}
+.daybox[open] summary{border-radius:var(--radius) var(--radius) 0 0; border-bottom-color:transparent}
+.daybox .body{
+  border:1px solid var(--line); border-top:none; border-radius:0 0 var(--radius) var(--radius);
+  padding:12px 14px; background:var(--card2);
+}
+.mini{font-size:12px; color:var(--muted); margin:8px 0 4px}
+.btn{
+  display:inline-block; margin-top:0; font-size:12px; font-weight:700;
+  color:var(--blue2); text-decoration:none; padding:4px 0;
+}
+.formulas{font-size:12px; color:var(--muted)}
+.formulas code{font-size:11px; color:var(--blue2)}
+.foot{font-size:11px; color:var(--dim); text-align:center; margin:20px 0 8px}
+.seg{
+  display:flex; gap:6px; margin-bottom:12px; overflow-x:auto; flex-wrap:wrap;
+}
+.seg span{
+  flex:0 0 auto; font-size:11px; font-weight:700; padding:6px 10px; border-radius:8px;
+  background:var(--card2); border:1px solid var(--line); color:var(--muted);
+}
+.seg span.ok{color:var(--g); border-color:rgba(31,157,87,.35)}
+.spark{display:flex; align-items:flex-end; gap:3px; height:28px; margin-top:8px}
+.spark i{display:block; width:8px; border-radius:2px 2px 0 0; background:var(--blue); opacity:.85}
+details.formulas-box summary{cursor:pointer; font-weight:700; font-size:14px}
+</style>
+</head>
+<body>
+<div class="banner">
+  PRODUCTION · Sep 27–Oct 3, 2026 · US units · Verify · PASS
+  <span class="stamp">Dual targets: Griffin provisional scoring · Muse lock reference (not used for RYG)</span>
+</div>
+<header class="app">
+  <div class="week">
+    <div>
+      <h1>Sunday Coach</h1>
+      <div class="meta">Sep 27 – Oct 3, 2026 · Griffin Sheppard · ET</div>
+    </div>
+    <div class="chip">Ultra 14 days out<br/>· as of Sat</div>
+  </div>
+  <nav class="nav" id="nav">
+    <a data-page="summary" class="active">Summary</a>
+    <a data-page="nutrition">Nutrition</a>
+    <a data-page="sleep">Sleep</a>
+    <a data-page="running">Running</a>
+    <a data-page="gym">Gym</a>
+  </nav>
+</header>
+<main>
+
+<!-- SUMMARY -->
+<section class="page active" id="summary">
+  <div class="heroes">
+    <div class="hero"><div class="k">Fuel · protein days</div><div class="v r">1<span class="u">/7</span></div><span class="trend down">↓ -1 vs prior</span></div>
+    <div class="hero"><div class="k">Sleep ≥7h</div><div class="v y">2<span class="u">/7</span></div><span class="trend flat">avg 6:27</span></div>
+    <div class="hero"><div class="k">Run plan</div><div class="v y">2/3</div><span class="trend flat">2/3 vs 3/4</span></div>
+    <div class="hero"><div class="k">Strength</div><div class="v y">2<span class="u">/3</span></div><span class="trend flat">sessions</span></div>
+  </div>
+  <div class="card">
+    <h2>Week scoreboard</h2>
+    <div class="scoreboard">
+      <div class="row"><div><div class="name">Nutrition</div><div class="sub">Protein 1/7 · kcal band 3/7 · sugar under 2/7</div></div><span class="pill y">PARTIAL</span></div>
+      <div class="row"><div><div class="name">Sleep / recovery</div><div class="sub">Avg 6:27 · deep 46m · score 71</div></div><span class="pill y">PARTIAL</span></div>
+      <div class="row"><div><div class="name">Running</div><div class="sub">Plan 2/3 · long MISS (prescribed 14.0) · accessories 0/3</div></div><span class="pill y">PARTIAL</span></div>
+      <div class="row"><div><div class="name">Strength</div><div class="sub">2/3 sessions · Mon HIT · Wed HIT · Fri SKIP · squat null</div></div><span class="pill y">PARTIAL</span></div>
+      <div class="row"><div><div class="name">Run accessories</div><div class="sub">0/3 SKIP · Sun/Tue/Thu no Hevy accessories logged</div></div><span class="pill skip">0/3</span></div>
+    </div>
+  </div>
+  <div class="card rx">
+    <h2>This week’s focus</h2>
+    <ul>
+      <li>Protein floor: only 1/7 days hit ≥160g (avg 131.9g) — anchor a protein hit at every meal.</li>
+      <li>Sat long prescribed 14.0 mi was a clean <b>MISS</b> (no Garmin run). Longest completed was Sun easy 4.78 mi @ 10:14 — that is <b>not</b> the long run. Do not invent elevated Sat kcal; Sat target stayed base 2750.</li>
+      <li>Plan hit 2/3 — Sun Easy 3.25 HIT, Thu Drop Set 3.1 HIT, Sat LONG MISS. Accessories 0/3 SKIP.</li>
+      <li>Gym 2/3 — Fri Full Body SKIP. No back squat this week (Bulgarian Split Squat is not squat).</li>
+      <li>Fri night sleep (wake 10-02) scored 19 / 140 min asleep — real POOR night; protect bed before Ultra 14 days out (as of Sat).</li>
+      <li>Water oz unavailable (MFP null all days); steps unavailable as daily total; HR zones unavailable this week.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Data health</h3>
+    <div class="seg">
+      <span class="ok">MFP · OK</span><span class="ok">Garmin · OK</span><span class="ok">Hevy · OK</span><span class="ok">Verify · PASS</span>
+      <span>Water · null</span><span>HR zones · null</span><span>Steps · unavailable</span>
+    </div>
+  </div>
+</section>
+
+<!-- NUTRITION -->
+<section class="page" id="nutrition">
+  <div class="heroes">
+    <div class="hero"><div class="k">Avg kcal</div><div class="v">2,564.4</div><span class="trend down">↓ -179 vs prior</span>
+      <div class="spark"><i style="height:58%"></i><i style="height:56%"></i><i style="height:62%"></i><i style="height:51%"></i><i style="height:100%"></i><i style="height:26%"></i><i style="height:52%"></i></div>
+    </div>
+    <div class="hero"><div class="k">Avg protein</div><div class="v r">131.9<span class="u">g</span></div><span class="trend down">↓ -2.3g vs prior</span><span class="trend flat" style="margin-left:4px">1/7 hit days</span></div>
+    <div class="hero"><div class="k">Avg carbs</div><div class="v">267.6<span class="u">g</span></div><span class="trend flat">—</span></div>
+    <div class="hero"><div class="k">Avg sugar</div><div class="v r">81.7<span class="u">g</span></div><span class="trend up">↓ -23.8g vs prior</span><span class="trend flat" style="margin-left:4px">2/7 under cap</span></div>
+    <div class="hero"><div class="k">Avg fat</div><div class="v">90.8<span class="u">g</span></div><span class="trend flat">—</span></div>
+    <div class="hero"><div class="k">Avg caffeine</div><div class="v">250.8<span class="u">mg</span></div><span class="trend flat">est · 5 days</span></div>
+    <div class="hero"><div class="k">Avg fiber</div><div class="v">21.4<span class="u">g</span></div><span class="trend flat">—</span></div>
+    <div class="hero"><div class="k">Avg water</div><div class="v muted">—</div><span class="trend flat">unavailable</span></div>
+  </div>
+  <div class="card">
+    <h2>Daily macros</h2>
+    <p class="mini">Targets: base 2750 · P160 floor · C300 (key 350–450) · F85 · sugar ≤50 (≤100 key) · water 120oz · Sat long elevated only when long_mi logged</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Day</th><th>kcal</th><th>P</th><th>C</th><th>F</th><th>Sugar</th><th>Caff</th><th>Water</th></tr></thead>
+      <tbody>
+        <tr><td>Sun</td><td class="num g">2,585</td><td class="num r">109.5</td><td class="num g">278.5</td><td class="num y">112.9</td><td class="num r">116</td><td class="num">—</td><td class="num muted">—</td></tr><tr><td>Mon</td><td class="num g">2,488.8</td><td class="num y">152.7</td><td class="num g">270.4</td><td class="num g">86.9</td><td class="num g">41.8</td><td class="num">200</td><td class="num muted">—</td></tr><tr><td>Tue</td><td class="num g">2,738.4</td><td class="num y">144.3</td><td class="num y">371.8</td><td class="num g">80.5</td><td class="num y">62.3</td><td class="num">200</td><td class="num muted">—</td></tr><tr><td>Wed</td><td class="num y">2,243.7</td><td class="num r">133.7</td><td class="num r">191.6</td><td class="num y">107.6</td><td class="num r">65.1</td><td class="num">400</td><td class="num muted">—</td></tr><tr><td>Thu</td><td class="num r">4,434.9</td><td class="num g">200.5</td><td class="num r">431.7</td><td class="num r">153.9</td><td class="num r">197.5</td><td class="num">434</td><td class="num muted">—</td></tr><tr><td>Fri</td><td class="num r">1,162.2</td><td class="num r">101.2</td><td class="num r">88.9</td><td class="num r">23.8</td><td class="num g">13.1</td><td class="num">—</td><td class="num muted">—</td></tr><tr><td>Sat</td><td class="num y">2,297.8</td><td class="num r">81.6</td><td class="num y">240.1</td><td class="num g">70.2</td><td class="num r">75.8</td><td class="num">20</td><td class="num muted">—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="mini" style="margin-top:10px">Sat long kcal rule <code>2750+(100×long_mi)</code> — <b>not applied</b> this week (long_run_status=MISS). Sat day target stayed <b>2750</b> base · actual 2,297.8 · 83.6% · <span class="y">Y</span>. Key carb band 350–450; sugar caps 50 / 100. kcal in band 3/7.</p>
+  </div>
+  <div class="card rx">
+    <h2>Nutrition coach</h2>
+    <ul>
+      <li>Hit 160g protein daily — only 1/7 cleared (avg 131.9g, -2.3g vs prior).</li>
+      <li>kcal in band 3/7; avg 2564.4 kcal (-179 vs prior).</li>
+      <li>Sugar under-cap 2/7 (avg 81.7g, -23.8g vs prior) — cut non-key dessert sugar (cap 50g).</li>
+      <li>Thu spike (4434.9 kcal / sugar 197.5) and Fri under-fuel (1162.2) drove volatility — steady the midweek floor.</li>
+      <li>Water oz unavailable from MFP this week (all days null) — never invent 0; log water manually or fix MFP water sync.</li>
+      <li>Caffeine is product-label estimate (not an MFP field); clock vs cutoff not scored (no MFP timestamps).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLEEP -->
+<section class="page" id="sleep">
+  <div class="heroes">
+    <div class="hero"><div class="k">Avg bed</div><div class="v">11:31p</div><span class="trend flat">—</span></div>
+    <div class="hero"><div class="k">Avg wake</div><div class="v">6:23a</div><span class="trend flat">—</span></div>
+    <div class="hero"><div class="k">Avg total</div><div class="v y">6:27</div><span class="trend down">↓ -0.4h vs prior</span><span class="trend flat" style="margin-left:4px">2/7 ≥7h</span></div>
+    <div class="hero"><div class="k">Avg deep</div><div class="v r">46<span class="u">m</span></div><span class="trend flat">—</span></div>
+    <div class="hero"><div class="k">Avg score</div><div class="v y">71</div><span class="trend down">↓ -7 vs prior</span></div>
+    <div class="hero"><div class="k">HRV · BB Δ</div><div class="v">57.7<span class="u">· 57.7</span></div><span class="trend flat">Garmin</span></div>
+  </div>
+  <div class="card">
+    <h2>Nights</h2>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Night</th><th>Bed</th><th>Wake</th><th>Score</th><th>Light</th><th>Deep</th><th>REM</th><th>Total</th></tr></thead>
+      <tbody>
+        <tr><td>Sun</td><td class="num">11:03p</td><td class="num">7:40a</td><td class="num y">76</td><td class="num">356m</td><td class="num r">34m</td><td class="num">98m</td><td class="num g">8:08</td></tr><tr><td>Mon</td><td class="num">10:31p</td><td class="num">5:15a</td><td class="num g">80</td><td class="num">294m</td><td class="num r">31m</td><td class="num">76m</td><td class="num y">6:41</td></tr><tr><td>Tue</td><td class="num">10:16p</td><td class="num">4:41a</td><td class="num y">79</td><td class="num">267m</td><td class="num g">67m</td><td class="num">38m</td><td class="num r">6:12</td></tr><tr><td>Wed</td><td class="num">11:05p</td><td class="num">5:16a</td><td class="num y">76</td><td class="num">258m</td><td class="num r">42m</td><td class="num">51m</td><td class="num r">5:51</td></tr><tr><td>Thu</td><td class="num">10:31p</td><td class="num">5:10a</td><td class="num g">82</td><td class="num">262m</td><td class="num g">69m</td><td class="num">54m</td><td class="num r">6:25</td></tr><tr><td>Fri</td><td class="num">5:00a</td><td class="num">8:36a</td><td class="num r">19</td><td class="num">127m</td><td class="num r">13m</td><td class="num">0m</td><td class="num r">2:20</td></tr><tr><td>Sat</td><td class="num">10:05p</td><td class="num">8:00a</td><td class="num g">84</td><td class="num">388m</td><td class="num g">65m</td><td class="num">121m</td><td class="num g">9:34</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="mini">Garmin sleep only — no Whoop. Fri night (wake 10-02) score 19 / 140 min asleep is real POOR — shown as logged.</p>
+  </div>
+  <div class="card rx">
+    <h2>Sleep coach</h2>
+    <ul>
+      <li>Avg asleep 6:27 / score 71 (-7 vs prior) — 2/7 nights ≥7h.</li>
+      <li>Fri night (wake Oct 2) score 19 · 140 min · deep 13m · REM 0 — protect recovery the next day; do not soft-pass this.</li>
+      <li>Deep averaged 46m · REM 63m · bed 11:31p / wake 6:23a.</li>
+      <li>Best nights: Thu score 82 · Sat score 84 (9:34 asleep from 574 min) — copy earlier bed when possible.</li>
+      <li>Ultra 14 days out (as of Sat) — weeknight bed window ~10:00–10:30p to rebuild deep before race.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- RUNNING -->
+<section class="page" id="running">
+  <div class="heroes">
+    <div class="hero"><div class="k">Total miles</div><div class="v">13.3<span class="u">mi</span></div><span class="trend down">↓ -16.6 mi vs prior</span></div>
+    <div class="hero"><div class="k">Avg pace</div><div class="v">9:48</div><span class="trend flat">9:48 vs 9:04</span></div>
+    <div class="hero"><div class="k">Plan hit</div><div class="v y">2/3</div><span class="trend flat">2/3 vs 3/4</span></div>
+    <div class="hero"><div class="k">Walk miles</div><div class="v">2.01<span class="u">mi</span></div><span class="trend flat">—</span></div>
+    <div class="hero"><div class="k">Long run</div><div class="v r">MISS</div><span class="trend warn">prescribed 14.0 Sat</span></div>
+    <div class="hero"><div class="k">Avg steps</div><div class="v muted">—</div><span class="trend flat">unavailable</span></div>
+  </div>
+  <div class="card">
+    <h2>Runs vs prescribed</h2>
+    <p class="mini">Longest completed this week: Sun easy 4.78 mi @ 10:14 elev 121.4 ft — <b>not</b> a long run. Sat 14.0 LONG = MISS.</p>
+    <table>
+      <thead><tr><th>Day</th><th>Dist</th><th>Pace</th><th>vs plan</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>Sun Easy Run 3.25mi<div class="sub" style="font-size:11px;color:var(--muted)">cap no faster than 9:20/mi</div></td><td class="num">4.78 mi</td><td class="num">10:14</td><td><span class="pill g">HIT</span></td><td><a class="btn" href="https://www.strava.com/activities/20353598833" target="_blank" rel="noopener">Strava</a></td></tr><tr><td>Tue Tempo (unprescribed)</td><td class="num">4.51 mi</td><td class="num">8:53</td><td><span class="pill skip">extra</span></td><td><a class="btn" href="https://www.strava.com/activities/20386089899" target="_blank" rel="noopener">Strava</a></td></tr><tr><td>Thu Drop Set 3.1mi<div class="sub" style="font-size:11px;color:var(--muted)">WU 0.75≤9:15; 0.62@7:30; 0.5@7:25; 0.37@7:10; 0.25@7:00; 0.12@6:45; CD 0.5</div></td><td class="num">4.01 mi</td><td class="num">10:20</td><td><span class="pill g">HIT</span></td><td><a class="btn" href="https://www.strava.com/activities/20405261270" target="_blank" rel="noopener">Strava</a></td></tr><tr><td>Sat Long Run 14.0mi<div class="sub" style="font-size:11px;color:var(--muted)">no Garmin run · prescribed 14.0mi LONG</div></td><td class="num">—</td><td class="num">—</td><td><span class="pill r">MISS</span></td><td><span class="muted">—</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin:4px 2px 8px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Run accessories · Tue / Thu / Sun</h3>
+  <p class="mini" style="margin:0 2px 8px">0/3 SKIP — no Hevy accessories logged Sun/Tue/Thu this week.</p>
+  <details class="daybox"><summary>Sunday · Run Accessories <span class="pill skip">SKIP</span></summary><div class="body"><p class="muted" style="margin:0;font-weight:600">No Hevy workout with this title logged on calendar day</p></div></details><details class="daybox" open><summary>Tuesday · Run Accessories <span class="pill skip">SKIP</span></summary><div class="body"><p class="muted" style="margin:0;font-weight:600">No Hevy workout with this title logged on calendar day</p></div></details><details class="daybox"><summary>Thursday · Run Accessories <span class="pill skip">SKIP</span></summary><div class="body"><p class="muted" style="margin:0;font-weight:600">No Hevy workout with this title logged on calendar day</p></div></details>
+
+  <details class="card" style="margin-top:12px">
+    <summary style="cursor:pointer;font-weight:700">HR zones · Walks</summary>
+    <div style="margin-top:12px">
+      <h3>Heart rate zones (completed runs)</h3>
+      <p class="muted" style="margin:0 0 10px;font-weight:600">Unavailable this week — Garmin activity files are lap-only (no hrZoneDTOs). Do not invent bars from a prior week.</p>
+      <h3 style="margin-top:14px">Walks</h3>
+      <table>
+        <thead><tr><th>Day</th><th>Dist</th><th>Time</th><th>Pace</th></tr></thead>
+        <tr><td>09-27 · <a class="btn" href="https://www.strava.com/activities/20358521145" target="_blank" rel="noopener">Strava</a></td><td class="num">2.01 mi</td><td class="num">39m</td><td class="num">19:19</td></tr>
+      </table>
+    </div>
+  </details>
+  <div class="card rx">
+    <h2>Running coach</h2>
+    <ul>
+      <li>Plan hit 2/3 — Sun Easy 3.25 HIT (actual 4.78 @ 10:14), Thu Drop Set / intervals 3.1 HIT (actual 4.01 @ 10:20), Sat 14.0 LONG <b>MISS</b>.</li>
+      <li>Tue Tempo 4.51 @ 8:53 was unprescribed this week (extra) — logged with Strava link.</li>
+      <li>Long honesty: Sat 2026-10-03 prescribed 14mi LONG_RUN had no Garmin run. longest_run is Sun easy, not a long run.</li>
+      <li>Accessories 0/3 SKIP (Sun/Tue/Thu) — factual; no Hevy titled accessories.</li>
+      <li>Avg steps unavailable (no Garmin daily-summary steps). HR zones null this week.</li>
+      <li>Total run 13.3 mi (-16.6 vs prior) · walk 2.01 · pace 9:48.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- GYM -->
+<section class="page" id="gym">
+  <div class="heroes">
+    <div class="hero"><div class="k">e1RM Bench</div><div class="v">196.33<span class="u">lb</span></div><span class="trend flat">155×8</span></div>
+    <div class="hero"><div class="k">e1RM Trap DL</div><div class="v">285.83<span class="u">lb</span></div><span class="trend flat">245×5</span></div>
+    <div class="hero"><div class="k">Wtd PU</div><div class="v">+25<span class="u">→ +29.17</span></div><span class="trend flat">added load</span></div>
+    <div class="hero"><div class="k">Sessions</div><div class="v y">2<span class="u">/3</span></div><span class="trend flat">Mon+Wed HIT · Fri SKIP</span></div>
+    <div class="hero"><div class="k">e1RM Squat</div><div class="v muted">—</div><span class="trend flat">no back squat · BSS ≠ squat</span></div>
+    <div class="hero"><div class="k">e1RM BSS</div><div class="v">95.0<span class="u">lb</span></div><span class="trend flat">75×8 · not squat</span></div>
+  </div>
+  <p class="formulas" style="margin:-4px 2px 12px">e1RM (Epley) = w_lb × (1 + reps/30) · wtd pull-up uses added load only · kg→lb × 2.2046226218 · Squat hero = exact “Squat (Barbell)” only</p>
+
+  <h3 style="margin:4px 2px 8px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Lift days</h3>
+  <details class="daybox" open><summary>Monday · Full Body <span class="pill g">HIT</span></summary><div class="body"><p class="mini">Monday - Full Body Lift · 0h 52m 9s · 6 lifts</p><table><thead><tr><th>Lift</th><th>Sets</th></tr></thead><tr><td>Dead Hang</td><td class="num">35s, 35s, 30s</td></tr><tr><td>Hanging Leg Raise</td><td class="num">15/15/15 reps</td></tr><tr><td>Bench Press (Barbell)</td><td class="num">135×10, 155×8, 165×5, 165×5, 165×4</td></tr><tr><td>Pull Up (Weighted)</td><td class="num">+25×5, +25×5, +25×5, +25×4</td></tr><tr><td>Single Leg Romanian Deadlift (Dumbbell)</td><td class="num">25×10, 25×10, 25×10</td></tr><tr><td>Suitcase Carry (Dumbbell)</td><td class="num">62.5 lb × 65.6 yd, 62.5 lb × 65.6 yd, 62.5 lb × 65.6 yd</td></tr></table><a class="btn" href="https://hevy.com/workout/8b1d2c3f-22e1-4438-bea5-4cc924fd47cc" target="_blank" rel="noopener">Open in Hevy</a></div></details><details class="daybox"><summary>Wednesday · Full Body <span class="pill g">HIT</span></summary><div class="body"><p class="mini">Wednesday - Full Body Lift · 0h 40m 34s · 5 lifts</p><table><thead><tr><th>Lift</th><th>Sets</th></tr></thead><tr><td>Dead Hang</td><td class="num">40s, 35s, 30s</td></tr><tr><td>Hanging Leg Raise</td><td class="num">15/15/15 reps</td></tr><tr><td>Deadlift (Trap bar)</td><td class="num">185×10, 245×5, 245×5, 245×5</td></tr><tr><td>Bulgarian Split Squat (Barbell)</td><td class="num">75×8, 75×8, 75×8</td></tr><tr><td>Pull Up</td><td class="num">BW 8/8/6</td></tr></table><a class="btn" href="https://hevy.com/workout/c4170d82-cc12-43f4-bf14-63fe6cc074ba" target="_blank" rel="noopener">Open in Hevy</a></div></details><details class="daybox"><summary>Friday · Full Body <span class="pill skip">SKIP</span></summary><div class="body"><p class="muted" style="margin:0;font-weight:600">SKIP — no hevy full body</p></div></details>
+
+  <div class="card" style="margin-top:12px">
+    <h2>Key lifts · last 3</h2>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Lift</th><th>Latest</th><th>Prior</th><th>Prior</th><th>Trend</th></tr></thead>
+      <tr><td>Bench</td><td class="num">155×8 (e1 196.33)</td><td class="num muted">165×5 (e1 192.5)</td><td class="num muted">160×6 (e1 192)</td><td><span class="pill g">UP</span></td></tr><tr><td>Trap DL</td><td class="num">245×5 (e1 285.83)</td><td class="num muted">245×5 (e1 285.83)</td><td class="num muted">235×5 (e1 274.17)</td><td><span class="pill y">FLAT</span></td></tr><tr><td>Wtd PU</td><td class="num">+25×5 → +29.17</td><td class="num muted">+25×6 → +30</td><td class="num muted">+25×5 → +29.17</td><td><span class="pill r">DOWN</span></td></tr><tr><td>Squat</td><td class="num">155×6 (e1 186)</td><td class="num muted">155×5 (e1 180.83)</td><td class="num muted">155×5 (e1 180.83)</td><td><span class="pill g">UP</span></td></tr><tr><td>BSS (DB hist)</td><td class="num">70×10 (e1 93.33)</td><td class="num muted">62.5×10 (e1 83.33)</td><td class="num muted">62.5×10 (e1 83.33)</td><td><span class="pill g">UP</span></td></tr><tr><td>Wtd Dip</td><td class="num">35×10 (e1 46.67)</td><td class="num muted">30×10 (e1 40)</td><td class="num muted">30×10 (e1 40)</td><td><span class="pill g">UP</span></td></tr><tr><td>OHP</td><td class="num">75×10 (e1 100)</td><td class="num muted">—</td><td class="num muted">—</td><td><span class="pill skip">—</span></td></tr><tr><td>BSS (BB this wk)</td><td class="num">75×8 (e1 95.0)</td><td class="num muted">—</td><td class="num muted">—</td><td><span class="pill skip">new BB</span></td></tr>
+    </table>
+    </div>
+    <p class="mini">Squat hero null this week — no “Squat (Barbell)” logged. Bulgarian Split Squat shown separately (not squat). Wed skipped Chest Dip + Farmers vs typical routine.</p>
+  </div>
+  <div class="card rx">
+    <h2>Strength coach</h2>
+    <ul>
+      <li>Sessions 2/3 — Mon Full Body HIT · Wed Full Body HIT · Fri SKIP (no Hevy full-body).</li>
+      <li>Week bests: Bench e1RM 196.33 (155×8), Trap DL 285.83 (245×5), Wtd PU +25 → 29.17.</li>
+      <li>BSS (Barbell) e1RM 95.0 (75×8) — not a squat substitute in the squat hero slot.</li>
+      <li>No back squat this week (No back squat in week. Former squat hero was Bulgarian Split Squat (Barbell) and was moved.).</li>
+      <li>Accessories still 0/3 across Sun/Tue/Thu — same gap as running tab.</li>
+    </ul>
+  </div>
+</section>
+
+<details class="card formulas-box">
+  <summary>Formulas · targets · adherence</summary>
+  <div class="formulas" style="margin-top:12px; display:flex; flex-direction:column; gap:6px">
+    <div><code>kg_to_lb</code> — weight_lb = weight_kg * 2.2046226218</div><div><code>m_to_mi</code> — distance_mi = distance_m / 1609.344</div><div><code>m_to_yd</code> — distance_yd = distance_meters * 1.0936133</div><div><code>m_to_ft</code> — elev_ft = elevationGain_m * 3.280839895</div><div><code>pace_mmss</code> — prefer sec/mi = 1609.344/averageSpeed_m_s (Garmin); else duration_sec/mi; format mm:ss</div><div><code>epley_e1rm</code> — e1rm_lb = w_lb * (1 + reps/30) if 2 &lt;= reps &lt;= 10 else null</div><div><code>avg_exclude_null</code> — avg = mean(values where not null); gaps counted separately; missing day != 0</div><div><code>kcal_color</code> — G if 90..110% of day target else Y if 80..90 or 110..120 else R</div><div><code>protein_color</code> — G&gt;=160 Y140-159 R&lt;140</div><div><code>fat_color</code> — G if 70..100 else Y if 60..70 or 100..120 else R</div><div><code>sugar_color</code> — G if &lt;=cap else Y if &lt;=1.25*cap else R; cap=50 non-key / 100 key</div><div><code>sleep_et</code> — bed/wake = fromtimestamp(sleepStart/EndTimestampGMT/1000, UTC).astimezone(America/New_York)</div><div><code>asleep_min</code> — asleep_min = sleepTimeSeconds / 60</div><div><code>days_out</code> — (date(2026-10-17) - date(2026-10-03)).days = 14</div><div><code>sat_long_kcal</code> — if Sat long_mi&gt;=10: day_kcal_target = 2750 + (100 × long_mi); RYG 90–110% of that target</div><div><code>caffeine_est</code> — sum(product_lookup_mg * servings) over matching food_entries; not MFP field</div><div><code>volume_weighted_pace</code> — avg_pace = sum(pace_sec_per_mi * mi)/sum(mi) across completed runs</div><div style="margin-top:8px"><b>Dashboard scoring</b> — Griffin provisional 2700–2800 / P160 / C300·key350–450 / F85 / sugar 50·100; Sat long kcal = 2750+(100×long_mi)</div><div><b>Muse lock reference</b> — 2600 / 160P / 270C / 85F — NOT used for RYG this week (footer reference only)</div><div><b>This week Sat long</b> — long_run_status=MISS · sat_long_kcal_rule_applied=false · Sat day target stays base 2750 (no elevated kcal)</div>
+  </div>
+</details>
+
+<p class="foot">Sunday Coach production · week 2026-09-27→2026-10-03 · Verify PASS · 2026-10-04T09:28:30-04:00</p>
+</main>
+<script>
+const pages=[...document.querySelectorAll('.page')];
+const links=[...document.querySelectorAll('.nav a')];
+function show(id){
+  pages.forEach(p=>p.classList.toggle('active',p.id===id));
+  links.forEach(a=>a.classList.toggle('active',a.dataset.page===id));
+  history.replaceState(null,'','#'+id);
+  window.scrollTo(0,0);
+}
+links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();show(a.dataset.page)}));
+const hash=(location.hash||'#summary').slice(1);
+if(document.getElementById(hash)) show(hash);
+</script>
+</body>
+</html>
